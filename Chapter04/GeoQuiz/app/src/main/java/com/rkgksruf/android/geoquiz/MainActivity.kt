@@ -29,12 +29,12 @@ class MainActivity : AppCompatActivity() {
 
         val currentIndex = savedInstanceState?.getInt(KEY_INDEX,0) ?:0
         quizViewModel.currentIndex = currentIndex
-/*
-        val provider: ViewModelProvider = ViewModelProvider(this)   // 현재 액티비티와 연관된 ViewModelProvider 인스턴스 생성/반환 한다
-        val quizViewModel = provider.get(QuizViewModel::class.java)       // QuizViewModel 인스턴스 반환
-        // ViewModelProvider(this).get(QuizViewModel::class.java) 위에 두줄 이렇게 적어도 됨
-        Log.d(TAG, "Got a QuizViewModel: $quizViewModel")
-*/
+        /*
+                val provider: ViewModelProvider = ViewModelProvider(this)   // 현재 액티비티와 연관된 ViewModelProvider 인스턴스 생성/반환 한다
+                val quizViewModel = provider.get(QuizViewModel::class.java)       // QuizViewModel 인스턴스 반환
+                // ViewModelProvider(this).get(QuizViewModel::class.java) 위에 두줄 이렇게 적어도 됨
+                Log.d(TAG, "Got a QuizViewModel: $quizViewModel")
+        */
 
         trueButton = findViewById(R.id.true_button)
         falseButton = findViewById(R.id.false_button)
@@ -49,8 +49,8 @@ class MainActivity : AppCompatActivity() {
             checkAnswer(false)
         }
 
-        nextButton.setOnClickListener { _:View ->
-            quizViewModel.moveToText()
+        nextButton.setOnClickListener {
+            quizViewModel.moveToNext()
             updateQuestion()
         }
 
@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateQuestion() {
-        val questionTextResId = quizViewModel.currentIndex
+        val questionTextResId = quizViewModel.currentQuestionText
         questionTextView.setText(questionTextResId)
     }
 
