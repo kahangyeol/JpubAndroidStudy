@@ -18,3 +18,24 @@ Bundle 96P
 SIS(Saved Instance State) 저장된 인스턴스 상태 96P
 
   
+
+
+
+startActivityForResult 141P
+startActivityForResult(Intent, Int)
+두번째 매개변수는 요청코드로 사용자가 정의한 정수다 
+요청코드는 자식 액티비티에 전달되었다가 부모 액티비티가 다시 돌려받으며
+부모 액티비티가 여러 타입의 자식 액티비티들을 시작시킬때
+어떤 자식 액티비티가 결과를 돌려주는 것인지 알고자 할 때도 사용
+
+setResult 142P
+setResult(resultCode: Int)
+setResult(resultCode: Int, data: Intent)
+결과코드(ResultCode)는 사전 정의된 두개의 상수, 즉
+Activity.RESULT_OK(정수 -1), Activity.RESULT_CANCELED(정수 0) 중 하나다
+RESULT_FIRST_USER(정수 1) 상수도 사용할 수 있다.
+
+
+
+
+
