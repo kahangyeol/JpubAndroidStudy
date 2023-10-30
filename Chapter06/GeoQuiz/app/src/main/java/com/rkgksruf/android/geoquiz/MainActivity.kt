@@ -1,5 +1,6 @@
 package com.rkgksruf.android.geoquiz
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
@@ -70,6 +71,19 @@ class MainActivity : AppCompatActivity() {
         updateQuestion()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(resultCode != Activity.RESULT_OK) {
+            return
+        }
+
+        if (requestCode == REQUEST_CODE_CHEAT) {
+            quizViewModel.isCheater =
+                data?.getBooleanExtra(EXTRA_ANSWER_SHOWN, false) ?: false
+        }
+    }
+
     override fun onStart() {
         super.onStart()
         Log.d(TAG,"onStart() call")
@@ -109,11 +123,18 @@ class MainActivity : AppCompatActivity() {
     private fun checkAnswer(userAnswer: Boolean) {
         val correctAnswer = quizViewModel.currentQuestionAnswer
 
-        val messageResId = if (userAnswer == correctAnswer) {
+        /*val messageResId = if (userAnswer == correctAnswer) {
             R.string.correct_toast
         } else {
             R.string.incorrect_toast
+        }*/
+
+        val messageResId = when {
+            quizViewModel.isCheater -> R.string.judgment_toast  // isCheater = true 일때 / 컨닝했을때
+            userAnswer == correctAnswer -> R.string.correct_toast
+            else -> R.string.incorrect_toast
         }
+
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show()
     }
 }
