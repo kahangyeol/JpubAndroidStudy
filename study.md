@@ -23,7 +23,7 @@ Android OS 가 액티비티 외부에 저장하는 데이터
 Activity.onSavedInstanceState(Bundle)을 오버라이드해 사용가능
 액티비티 중단 상태 시 Activity.onSavedInstanceState(Bundle)호출
 
-## Data class
+## Data class 42P
 주로 데이터를 갖는 클래스
 업무에 관련된것, 프로그램에서 필요해서 생성한것, 등등
 비지니스 로직 처리 함수보다 주로 데이터를 저장하는 속성을 갖는다
@@ -66,6 +66,11 @@ setResult(resultCode: Int, data: Intent)
 결과코드(ResultCode)는 사전 정의된 두개의 상수, 즉
 Activity.RESULT_OK(정수 -1), Activity.RESULT_CANCELED(정수 0) 중 하나다
 RESULT_FIRST_USER(정수 1) 상수도 사용할 수 있다.
+
+## UUID
+UUID(Universally Unique Identifier, 128bit 고유한 값)
+안드로이드 프레임워크에 포함된 유틸리티 클래스 고유한 ID 값을 쉽게 생성하는 방법을 제공
+
 
 # Fragment
 Framgnet로 앱의 UI를 관리하면 유연성이 좋아진다
