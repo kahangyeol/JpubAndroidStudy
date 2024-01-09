@@ -1,4 +1,4 @@
-### 기본 지식/ETC
+# 기본 지식/ETC
 
 ## 리소스를 코드에서 사용하려면 리소스 ID가 필요 20P
 지정한 리소스 ID는 앱 빌드 할 때마다 안드로이드 빌드도구가 R.class에 자동으로 생성한다
@@ -56,7 +56,7 @@ setResult(resultCode: Int, data: Intent)
 Activity.RESULT_OK(정수 -1), Activity.RESULT_CANCELED(정수 0) 중 하나다
 RESULT_FIRST_USER(정수 1) 상수도 사용할 수 있다.
 
-### Fragment
+# Fragment
 Framgnet로 앱의 UI를 관리하면 유연성이 좋아진다
 액티비티의 작업(UI 관리) 수행을 대행할 수 있는 컨트롤러 객체   ※ UI는 화면 전체 또는 일부분이 될 수 있다.
 프래그먼트 뷰는 사용자가 보면서 상호작용 하기 원하는 UI 요소들을 포함
