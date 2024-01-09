@@ -23,6 +23,17 @@ Android OS 가 액티비티 외부에 저장하는 데이터
 Activity.onSavedInstanceState(Bundle)을 오버라이드해 사용가능
 액티비티 중단 상태 시 Activity.onSavedInstanceState(Bundle)호출
 
+## Data class
+주로 데이터를 갖는 클래스
+업무에 관련된것, 프로그램에서 필요해서 생성한것, 등등
+비지니스 로직 처리 함수보다 주로 데이터를 저장하는 속성을 갖는다
+
+클래스 인스턴스 끼리 속성의 값을 비교하거나(equals() 함수), 
+인스턴스를 컬렉션(ex. HashMap)에 저장할 때 사용할 키 값(Hash code) 을 생성하는 기능,
+속성값을 문자열로 출력하는 toString() 함수 기능이 필요하여 **코틀린에서는 Data class 라는개념을 만들었음**
+
+data 키워드를 지정하면 위의 기능들을 처리해주는 함수들을 해당 클래스에 맞게 코틀린 컴파일러가 자동으로 생성해준다.
+
 ## Intent.putExtra 137P
 key, value 값을 가지며 Intent.putExtra(name: String, value: 자료형)
 intent.get'value 자료형'Extra(name:String, value: 자료형)
