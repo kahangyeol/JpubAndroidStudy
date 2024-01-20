@@ -40,7 +40,7 @@ class CrimeFragment: Fragment() {
             }
 
             override fun onTextChanged(sequence: CharSequence?, start: Int, before: Int, count: Int) {
-                crime.title = sequence.toString()
+                crime.title = sequence.toString()    //Crime의 제목을 설정
             }
 
             override fun afterTextChanged(sequence: Editable?) {
