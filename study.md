@@ -2,17 +2,17 @@
 
 ## 안드로이드 생명주기 (Life Cycle) 65P
 **존재하지 않음(none)**  
-               ↑  
+                ↑  
   onCreate  onDestroy  
-     ↓           
+     ↓           
   **중단(stopped)**  
-               ↑  
+                ↑  
    onStart   onStop  
-     ↓           
+     ↓           
 **일시 중지(paused)**  
-               ↑  
+                ↑  
   onResume  onPause  
-     ↓           
+     ↓           
 **실행 재개(resumed)**  
 
 ## 리소스를 코드에서 사용하려면 리소스 ID가 필요 20P
