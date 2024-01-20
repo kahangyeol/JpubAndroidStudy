@@ -3,15 +3,15 @@
 ## 안드로이드 생명주기 (Life Cycle) 65P
 **존재하지 않음(none)**  
                 ↑  
-  onCreate  onDestroy  
+  onCreate  onDestroy  
      ↓           
-  **중단(stopped)**  
+  **중단(stopped)**  
                 ↑  
-   onStart   onStop  
+   onStart   onStop  
      ↓           
 **일시 중지(paused)**  
                 ↑  
-  onResume  onPause  
+  onResume  onPause  
      ↓           
 **실행 재개(resumed)**  
 
