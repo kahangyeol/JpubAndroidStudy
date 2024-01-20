@@ -1,5 +1,20 @@
 # 기본 지식/ETC
 
+## 안드로이드 생명주기 (Life Cycle) 65P
+**존재하지 않음(none)**
+               ↑
+  onCreate  onDestroy
+     ↓         
+  **중단(stopped)**
+               ↑
+   onStart   onStop
+     ↓         
+**일시 중지(paused)**
+               ↑
+  onResume  onPause
+     ↓         
+**실행 재개(resumed)**
+
 ## 리소스를 코드에서 사용하려면 리소스 ID가 필요 20P
 지정한 리소스 ID는 앱 빌드 할 때마다 안드로이드 빌드도구가 R.class에 자동으로 생성한다
 ex)R.layout.main_activity, R.string.app_name    -> R클래스의 내부 클래스인 layout 안에 정수형 상수로 되어있음 (ResId = Int형)
