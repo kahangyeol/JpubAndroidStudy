@@ -86,6 +86,23 @@ RESULT_FIRST_USER(정수 1) 상수도 사용할 수 있다.
 UUID(Universally Unique Identifier, 128bit 고유한 값)    
 안드로이드 프레임워크에 포함된 유틸리티 클래스 고유한 ID 값을 쉽게 생성하는 방법을 제공  
 
+## RecyclerView
+ReyclerView가 생성된 후에는 바로 LayoutManager를 설정 해야하며   
+RecyclerView는 항목들을 화면에 위치시키는 일을 직접 하지 않고 LayoutManager가 한다   
+따라서 LayoutManager 가 항목들을 화면에 위치시키고 스크롤 동작도 정의함  
+
+## ViewHolder 206P
+RecyclerView는 항목 View가 ViewHolder 인스턴스에 포함되어 있다고 간주함
+ViewHolder는 항목 View 의 참조(때로는 항목의 특정 위젯)를 갖는다
+
+## Adapter 209P
+RecyclerView는 ViewHolder를 생성하지 않고 이 일을 어댑터에게 요청함
+Adapter의 역할
+- 필요한 ViewHodler 인스턴스 생성
+- 모델계층의 데이터를 ViewHolder들과 바인딩
+RecyclerView의 역할
+- 새로운 ViewHolder 인스턴스 생성을 어댑터에게 요청
+- 지정된 위치의 데이터 항목에 ViewHolder를 바인딩하도록 어댑터에게 요청한다.
 
 # Fragment
 Framgnet로 앱의 UI를 관리하면 유연성이 좋아진다  
