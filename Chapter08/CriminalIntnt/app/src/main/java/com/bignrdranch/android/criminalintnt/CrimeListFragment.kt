@@ -89,7 +89,9 @@ class CrimeListFragment: Fragment() {
         override fun onBindViewHolder(holder: CrimeHolder, position: Int) {
             val crime = crimes[position]
             holder.bind(crime)
-        }
+            // bind 함수는 계속 업데이트 시켜주는거임
+            //CrimeHolder == ViewBindHolder 임
+        }// onBindViewHolder는 간단하게 만들어야 전체적인 recyclerView가 매끄럽게 움직임
     }
 
     companion object {
