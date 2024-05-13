@@ -113,6 +113,22 @@ ViewHolder (뷰홀더):
 - RecyclerView에서 각 아이템의 뷰들을 담당하는 객체입니다.  
 - 재활용이 가능한 뷰들을 보유하고, 필요한 경우 새로운 데이터로 업데이트됩니다.  
 - findViewById 등의 비싼 작업을 최소화하여 성능을 향상시킵니다.
+
+onBindViewHolder :
+RecyclerView에서 데이터와 ViewHolder를 결합하는 역할을 합니다.  
+이 메서드는 RecyclerView가 데이터를 표시할 때 호출되며, 각 아이템의 데이터를 ViewHolder에 바인딩합니다.
+1. 인자로 전달된 ViewHolder 객체를 사용하여 레이아웃의 뷰들을 참조합니다.  
+2. 해당 포지션에 해당하는 데이터를 얻어옵니다.  
+3. 뷰들에 데이터를 설정하거나, 이벤트 핸들러를 설정합니다.
+4. ViewHolder가 가지고 있는 뷰를 업데이트합니다.  
+  
+ex) override fun onBindViewHolder(holder: CrimeHolder, position: Int) {  //CrimeHolder = 1번  
+            val crime = crimes[position]  // postion 2번  
+            holder.bind(crime)   // bind 함수는 ViewHolder 에서 만든 업데이트 하는 함수임, 4번  
+        }   
+  
+RecyclerView가 목록을 표시한다면 onBindViewHolder() 메서드에서는 해당 포지션의 데이터를 가져와서 뷰에 설정합니다.  
+이를 통해 RecyclerView는 스크롤될 때 마다 각 아이템을 표시할 때마다 호출되어 뷰가 적절하게 업데이트되게 됩니다.  
   
 Adapter (어댑터):  
 - 데이터와 뷰 간의 다리 역할을 하는 객체입니다.
