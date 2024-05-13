@@ -120,12 +120,20 @@ RecyclerView에서 데이터와 ViewHolder를 결합하는 역할을 합니다.
 1. 인자로 전달된 ViewHolder 객체를 사용하여 레이아웃의 뷰들을 참조합니다.  
 2. 해당 포지션에 해당하는 데이터를 얻어옵니다.  
 3. 뷰들에 데이터를 설정하거나, 이벤트 핸들러를 설정합니다.
-4. ViewHolder가 가지고 있는 뷰를 업데이트합니다.  
+4. ViewHolder가 가지고 있는 뷰를 업데이트합니다.
+5. 각각의 아이템에 이벤트를 넣고싶을땐 onBindViewHolder에 넣어야 합니다.  
+5.1. ViewHolder에서 init{} 블럭을 사용해 itmeView.setOnClickListener 를 지정해도 되지만  
+     ViewHolder의 역할을 약간 벗어나는 경향이 있습니다.  
+     하지만 코드는 간결해지고 관리하기 쉬워집니다.  
   
-ex) override fun onBindViewHolder(holder: CrimeHolder, position: Int) {  //CrimeHolder = 1번  
-            val crime = crimes[position]  // postion 2번  
-            holder.bind(crime)   // bind 함수는 ViewHolder 에서 만든 업데이트 하는 함수임, 4번  
-        }   
+ex)  
+override fun onBindViewHolder(holder: CrimeHolder, position: Int) {  //CrimeHolder = 1번  
+     val crime = crimes[position]  // postion 2번  
+     holder.bind(crime)   // bind 함수는 ViewHolder 에서 만든 업데이트 하는 함수임, 4번  
+     holder.itemView.setOnClickListener{  
+     // 아이템은 ViewHolder에서 관리하므로 Holder에서 itemView 함수를 써서 아이템을 가져온 후 리스너 등록 5번, 3번               
+   }  
+ }   
   
 RecyclerView가 목록을 표시한다면 onBindViewHolder() 메서드에서는 해당 포지션의 데이터를 가져와서 뷰에 설정합니다.  
 이를 통해 RecyclerView는 스크롤될 때 마다 각 아이템을 표시할 때마다 호출되어 뷰가 적절하게 업데이트되게 됩니다.  
