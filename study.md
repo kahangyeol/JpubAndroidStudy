@@ -195,6 +195,15 @@ ex) 다수의 프래그먼트를 동시에 서로 다른 컨테이너에 추가.
 
 컨테이너 뷰의 resource id를 사용하여 UI 프래그먼트를 식별함
 
+## onAttach onDetach  
+onAttach는 프래그먼트가 액티비티에 붙을 때 호출됨  
+Fragment가 Activity와 상호작용을 설정하거나, Activity의 인스턴스를 얻어야 할 때 사용  
+매개변수는 context 이며 현재 Fragment가 붙어 있는 Activity의 Context를 제공  
+
+onDetach  
+메서드는 Fragment가 Activity와의 연결이 끊어질 때 호출됩니다. 이 메서드는 Fragment가 Activity와의 연결을 해제하고 필요한 정리 작업을 수행하는 데 사용  
+
+  
 # ROOM
 모델 클래스에 애노테이션을 지정해 데이터베이스 엔터티(entity)로 만듦  
 데이터베이스 자체를 나타내는 클래스를 생성  
