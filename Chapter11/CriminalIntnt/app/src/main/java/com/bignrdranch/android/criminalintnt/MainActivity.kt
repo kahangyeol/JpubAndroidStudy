@@ -26,10 +26,13 @@ class MainActivity : AppCompatActivity(), CrimeListFragment.Callbacks {
     }
 
     override fun onCrimeSelected(crimeId: UUID) {
-        val fragment = CrimeFragment()
+        val fragment = CrimeFragment.newInstance(crimeId)
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragment_container, fragment)
+            /* 액티비티에 현재 호스팅된 프래그먼트를 두번째 인자로 전달된 프래그먼트로 교체하여 첫번째 인자로 전달된 프래그먼트 id를 가지게 된다.
+               만일 기존 호스팅된 프래그먼트가 없으면 add로 호출했을때와 같게 새로운 프래그먼트가 추가된다*/
+            .addToBackStack(null)   // 백버튼을 누르면 해당 트랜잭션이 취소됨. CrimeFragment -> CrimeListFragment 로 이동
             .commit()
     }
 }
