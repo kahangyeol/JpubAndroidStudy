@@ -11,6 +11,8 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import java.util.UUID
 
 private const val TAG = "CrimeFragment"
@@ -21,13 +23,15 @@ class CrimeFragment: Fragment() {
     private lateinit var titleField: EditText
     private lateinit var dateButton: Button
     private lateinit var solvedCheckBox: CheckBox
+    private val crimeDetailViewModel: CrimeDetailViewModel by lazy {
+        ViewModelProvider(this).get(CrimeDetailViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {    // onCreate 에서 프래그먼트의 뷰를 인플레이트 하지 않는다
         super.onCreate(savedInstanceState)
         crime = Crime()
         val crimeId: UUID = arguments?.getSerializable(ARG_CRIME_ID) as UUID
-        Log.d(TAG, "args bundle crimeID: $crimeId")
-        //TODO: 궁극적으로 DB로 데이터 로드해야됨
+        crimeDetailViewModel.loadCrime(crimeId)
         //TODO: getSerializable Deprecated 됐으니까 Parcelable 사용해야됨
     }
 
@@ -54,15 +58,38 @@ class CrimeFragment: Fragment() {
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        crimeDetailViewModel.crimeLiveData.observe(
+            viewLifecycleOwner,
+            Observer {
+                crime?.let {
+                    this.crime = crime
+                    updateUI()
+                }
+            }
+        )
+    }
+
     override fun onStart() {
         super.onStart()
 
         val titleWatcher = object : TextWatcher {
-            override fun beforeTextChanged(sequence: CharSequence?, start: Int, before: Int, count: Int) {
+            override fun beforeTextChanged(
+                sequence: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
                 TODO("Not yet implemented")
             }
 
-            override fun onTextChanged(sequence: CharSequence?, start: Int, before: Int, count: Int) {
+            override fun onTextChanged(
+                sequence: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
                 crime.title = sequence.toString()    //Crime의 제목을 설정
             }
 
@@ -78,6 +105,16 @@ class CrimeFragment: Fragment() {
             setOnCheckedChangeListener { _, isChecked ->
                 crime.isSolved = isChecked
             }
+        }
+    }
+
+    private fun updateUI() {
+        titleField.setText(crime.title)
+        dateButton.text = crime.date.toString()
+//        solvedCheckBox.isChecked = crime.isSolved
+        solvedCheckBox.apply {
+            isChecked = crime.isSolved
+            jumpDrawablesToCurrentState() // 애니메이션 생략
         }
     }
 
