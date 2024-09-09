@@ -33,6 +33,9 @@ UI는 메인 스레드에서만 변경할 수 있다.
 LiveData는 앱의 서로 다른 부분 간에 데이터 전달을 쉽게 만들어줌,  
 프래그먼트로 클래스에서 데이터를 전달하는 경우, 스레드간에 데이터 전달, 백그라운드 스레드에서 main스레드로 데이터를 전달 등  
 
+Transformations.map() vs switchMap() 아래 링크 참고  
+https://velog.io/@hyom/AndroidKotlin-Transformations.map-vs-switchMap  
+  
 ## 리소스를 코드에서 사용하려면 리소스 ID가 필요 20P
 지정한 리소스 ID는 앱 빌드 할 때마다 안드로이드 빌드도구가 R.class에 자동으로 생성한다  
 ex)R.layout.main_activity, R.string.app_name    -> R클래스의 내부 클래스인 layout 안에 정수형 상수로 되어있음 (ResId = Int형)  
