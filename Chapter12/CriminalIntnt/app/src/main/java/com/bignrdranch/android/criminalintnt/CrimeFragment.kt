@@ -17,6 +17,7 @@ import java.util.UUID
 
 private const val TAG = "CrimeFragment"
 private const val ARG_CRIME_ID = "crime_id"
+private const val DIALOG_DATE = "DialogDate"
 
 class CrimeFragment: Fragment() {
     private lateinit var crime: Crime
@@ -47,10 +48,6 @@ class CrimeFragment: Fragment() {
         dateButton = view.findViewById(R.id.crime_date) as Button
         solvedCheckBox = view.findViewById(R.id.crime_solved) as CheckBox
 
-        dateButton.apply {
-            text = crime.title.toString()
-            isEnabled = false
-        }
         /* 속성을 연속으로 설정할 수 있는 함수 apply
             dateButton.setText(crime.title.toString());
             dateButton.setEnabled(false); 와 같음*/
@@ -98,7 +95,6 @@ class CrimeFragment: Fragment() {
             }
         }
 
-
         titleField.addTextChangedListener(titleWatcher)
 
         solvedCheckBox.apply {
@@ -106,6 +102,21 @@ class CrimeFragment: Fragment() {
                 crime.isSolved = isChecked
             }
         }
+
+        dateButton.setOnClickListener {
+            DatePickerFragment().apply {
+                show(this@CrimeFragment.getParentFragmentManager(), DIALOG_DATE)
+                //TODO: 여기
+            }
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        crimeDetailViewModel.saveCrime(crime)
+        // 프래그먼트가 중단 상태가 되면 호출됨(프래그먼트 화면 전체가 안보일때)
+        // 여기서는 상세내역 화면을 떠나거나(백버튼을 눌러서) 작업을 전환하면 데이터가 저장된다.
+        // 여기서 하면 메모리 부족으로 안드로이드가 프로세스를 종료해도 데이터각 유실이 되지 않는다 개꿀 따라시
     }
 
     private fun updateUI() {
