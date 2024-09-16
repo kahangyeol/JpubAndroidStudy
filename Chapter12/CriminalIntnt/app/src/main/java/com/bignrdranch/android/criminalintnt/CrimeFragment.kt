@@ -108,14 +108,6 @@ class CrimeFragment: Fragment() {
         }
     }
 
-    override fun onStop() {
-        super.onStop()
-        crimeDetailViewModel.saveCrime(crime)
-        // 프래그먼트가 중단 상태가 되면 호출됨(프래그먼트 화면 전체가 안보일때)
-        // 여기서는 상세내역 화면을 떠나거나(백버튼을 눌러서) 작업을 전환하면 데이터가 저장된다.
-        // 여기서 하면 메모리 부족으로 안드로이드가 프로세스를 종료해도 데이터각 유실이 되지 않는다 개꿀 따라시
-    }
-
     private fun updateUI() {
         titleField.setText(crime.title)
         dateButton.text = crime.date.toString()

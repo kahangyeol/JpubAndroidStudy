@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.room.Room
 import com.bignrdranch.android.criminalintnt.database.CrimeDatabase
 import java.util.UUID
-import java.util.concurrent.Executors
 
 // 싱글톤으로 생성, 앱이 실행되는 동안 하나의 인스턴스만 생성된다.
 // 앱이 메모리에 있는 한 계속 존재하므로 액티비티나 프래그먼트 생명주기 상태가 변경되어도 계속 유지될 수 있음
@@ -21,22 +20,9 @@ class CrimeRepository private constructor(context: Context){
     ).build()
 
     private val crimeDao = database.crimeDao()      // DAO의 엑세스된 함수를 사용하기 위함
-    private val executor = Executors.newSingleThreadExecutor()
 
     fun getCrimes() : LiveData<List<Crime>> = crimeDao.getCrimes()
     fun getCrime(id: UUID) : LiveData<Crime?> = crimeDao.getCrime(id)
-
-    fun updateCrime(crime: Crime) {
-        executor.execute {  // 백그라운드 스레드를 사용해 코드를 실행한다.
-            crimeDao.updateCrime(crime)
-        }
-    }
-
-    fun addCrime(crime: Crime){
-        executor.execute {
-            crimeDao.addCrime(crime)
-        }
-    }
 
     companion object {
         private var INSTANCE: CrimeRepository? = null
