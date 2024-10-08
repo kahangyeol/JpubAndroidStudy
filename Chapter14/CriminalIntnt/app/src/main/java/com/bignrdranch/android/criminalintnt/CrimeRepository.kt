@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.room.Room
 import com.bignrdranch.android.criminalintnt.database.CrimeDatabase
+import com.bignrdranch.android.criminalintnt.database.migration_1_2
 import java.util.UUID
 import java.util.concurrent.Executors
 
@@ -18,7 +19,7 @@ class CrimeRepository private constructor(context: Context){
         context.applicationContext,     // 데이터베이스의 Context, 여기서는 CriminalApplication의 콘텍스트 객체를 전달
         CrimeDatabase::class.java,      // Room으로 생성하고자 하는 데이터베이스 클래스
         DATABASE_NAME                   // Room으로 생성하고자 하는 데이터베이스 파일 이름
-    ).build()
+    ).addMigrations(migration_1_2).build()
 
     private val crimeDao = database.crimeDao()      // DAO의 엑세스된 함수를 사용하기 위함
     private val executor = Executors.newSingleThreadExecutor()
