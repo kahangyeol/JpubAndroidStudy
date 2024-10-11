@@ -1,6 +1,10 @@
 package com.bignrdranch.android.criminalintnt
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.format.DateFormat
@@ -21,6 +25,7 @@ private const val TAG = "CrimeFragment"
 private const val ARG_CRIME_ID = "crime_id"
 private const val DIALOG_DATE = "DialogDate"
 private const val REQUEST_DATE = 0
+private const val REQUEST_CONTACT = 1
 private const val DATE_FORMAT = "yyyy년 M월 d일 H시 m분, E요일"
 
 class CrimeFragment: Fragment(), DatePickerFragment.Callbacks {
@@ -28,6 +33,8 @@ class CrimeFragment: Fragment(), DatePickerFragment.Callbacks {
     private lateinit var titleField: EditText
     private lateinit var dateButton: Button
     private lateinit var solvedCheckBox: CheckBox
+    private lateinit var reportButton: Button
+    private lateinit var suspectButton: Button
     private val crimeDetailViewModel: CrimeDetailViewModel by lazy {
         ViewModelProvider(this).get(CrimeDetailViewModel::class.java)
     }
@@ -51,6 +58,8 @@ class CrimeFragment: Fragment(), DatePickerFragment.Callbacks {
         titleField = view.findViewById(R.id.crime_title) as EditText
         dateButton = view.findViewById(R.id.crime_date) as Button
         solvedCheckBox = view.findViewById(R.id.crime_solved) as CheckBox
+        reportButton = view.findViewById(R.id.crime_report) as Button
+        suspectButton = view.findViewById(R.id.crime_suspect) as Button
 
         /* 속성을 연속으로 설정할 수 있는 함수 apply
             dateButton.setText(crime.title.toString());
@@ -113,6 +122,29 @@ class CrimeFragment: Fragment(), DatePickerFragment.Callbacks {
                 show(this@CrimeFragment.getParentFragmentManager(), DIALOG_DATE)
             }
         }
+
+        reportButton.setOnClickListener {
+            Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, getCrimeReport())
+                putExtra(Intent.EXTRA_SUBJECT,
+                    getString(R.string.crime_report_subject))
+            }.also { intent ->
+                /*startActivity(intent)*/   // 응답할 앱이 없다면 액티비티 선택기가 뜸 (chooser)
+                // 아래에서 뿅 뜨면서 사용할 애플리케이션 뜨는거임
+                val chooserIntent = Intent.createChooser(intent, getString(R.string.send_report))
+                startActivity(chooserIntent)
+            }
+        }
+
+        suspectButton.apply {
+            val pickerContactIntent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
+
+            setOnClickListener{
+                //Todo: startActivityForResult 대신 Activity Result API 쓰기 (deprecated 됐음)
+                startActivityForResult(pickerContactIntent, REQUEST_CONTACT)
+            }
+        }
     }
 
     override fun onStop() {
@@ -131,6 +163,32 @@ class CrimeFragment: Fragment(), DatePickerFragment.Callbacks {
             isChecked = crime.isSolved
             jumpDrawablesToCurrentState() // 애니메이션 생략
         }
+
+        if(crime.suspect.isNotEmpty()){
+            suspectButton.text = crime.suspect
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when{
+            resultCode != Activity.RESULT_OK -> return      // 결과가 성공이 아니면 종료
+
+            requestCode == REQUEST_CONTACT && data != null -> {
+                val contactUri: Uri = data.data ?: return   // ?: 는 null 이면 return 아니면 data.data 가 contactUri에 들어감
+                val queryFields = arrayOf(ContactsContract.Contacts.DISPLAY_NAME)
+                val cursor = requireActivity().contentResolver.query(contactUri, queryFields, null, null, null)
+                cursor?.use {
+                    if(it.count == 0)
+                        return
+
+                    it.moveToFirst()
+                    val suspect = it.getString(0)
+                    crime.suspect = suspect
+                    crimeDetailViewModel.saveCrime(crime)
+                    suspectButton.text = suspect
+                }
+            }
+        }   //TODO: 여기까지 했음 해석이나 하셈
     }
 
     private fun getCrimeReport(): String{
