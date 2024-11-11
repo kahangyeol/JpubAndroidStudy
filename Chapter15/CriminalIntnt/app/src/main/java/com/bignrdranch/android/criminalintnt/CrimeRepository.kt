@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Room
 import com.bignrdranch.android.criminalintnt.database.CrimeDatabase
 import com.bignrdranch.android.criminalintnt.database.migration_1_2
+import java.io.File
 import java.util.UUID
 import java.util.concurrent.Executors
 
@@ -13,7 +14,7 @@ import java.util.concurrent.Executors
 
 private const val DATABASE_NAME = "crime-database"
 
-class CrimeRepository private constructor(context: Context){
+class CrimeRepository private constructor(context: Context) {
 
     private val database : CrimeDatabase = Room.databaseBuilder(    //CrimeDatabase의 실체 클래스 생성
         context.applicationContext,     // 데이터베이스의 Context, 여기서는 CriminalApplication의 콘텍스트 객체를 전달
@@ -23,6 +24,7 @@ class CrimeRepository private constructor(context: Context){
 
     private val crimeDao = database.crimeDao()      // DAO의 엑세스된 함수를 사용하기 위함
     private val executor = Executors.newSingleThreadExecutor()
+    private val filesDir = context.applicationContext.filesDir
 
     fun getCrimes() : LiveData<List<Crime>> = crimeDao.getCrimes()
     fun getCrime(id: UUID) : LiveData<Crime?> = crimeDao.getCrime(id)
@@ -38,6 +40,8 @@ class CrimeRepository private constructor(context: Context){
             crimeDao.addCrime(crime)
         }
     }
+
+    fun getPhotoFile(crime: Crime): File = File(filesDir, crime.photoFileName)
 
     companion object {
         private var INSTANCE: CrimeRepository? = null
